@@ -38,10 +38,10 @@ if file:
             st.error("Please input a Server")
             st.stop()
         if not password:
-            st.error("Please input a Password")
+            st.error("Please input a Password in the side bar through this icon >>"")
             st.stop()
         if not sender_email:
-            st.error("Please input a sender_email")
+            st.error("Please input a sender_email in the side bar through this icon >>")
             st.stop()
         if not email_body:
             st.error("Please input an email_body")
