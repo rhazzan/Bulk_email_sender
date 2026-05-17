@@ -2,16 +2,6 @@ import streamlit as st
 import pandas as pd
 import smtplib as smtp
 from email_sender import send_email
-# def get_server(host,port,timeout=30,ttls=True,sender_email=None,password=None):
-#     server = smtp.SMTP(host,port,timeout=timeout)
-#     if ttls:
-#         server.starttls() #Secure connection
-#         server.login(sender_email,password)
-#     else:
-#         server.login(sender_email,password)
-#     return server
-
-
 
 ## Set up Streamlit page 
 # Set up sidebar
