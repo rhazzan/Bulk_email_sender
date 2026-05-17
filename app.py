@@ -15,7 +15,7 @@ starttls = st.sidebar.checkbox("Use TLS (STARTTLS)",value=True)
 
 ## set up main Page
 st.title("Send Bulk Email")
-file = st.file_uploader("Upload CSV or Excel file with contacts",accept_multiple_files=False,type=["csv","xlsx"])
+file = st.file_uploader("Upload CSV or Excel file with contacts",accept_multiple_files=False,type=["csv","xlsx","xls"])
 if file:
     if file.type == "text/csv":
         df = pd.read_csv(file)
