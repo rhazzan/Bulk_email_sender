@@ -4,7 +4,7 @@ import smtplib as smtp
 from email_sender import send_email
 
 ## Set up Streamlit page 
-st.title("Bulk-Email-Sender")
+st.set_page_config(page_title = "Bulk Email Sender")
 # Set up sidebar
 st.sidebar.header("SMTP Settings")
 server = st.sidebar.text_input("SMTP server","smtp.gmail.com")
