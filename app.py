@@ -4,7 +4,6 @@ import smtplib as smtp
 from email_sender import send_email
 
 ## Set up Streamlit page 
-st.set_page_config(page_title = "Bulk Email Sender",layout="wide", initial_sidebar_state="expanded")
 # Set up sidebar
 st.sidebar.header("SMTP Settings")
 server = st.sidebar.text_input("SMTP server","smtp.gmail.com")
@@ -15,7 +14,7 @@ starttls = st.sidebar.checkbox("Use TLS (STARTTLS)",value=True)
 
 ## set up main Page
 st.title("Send Bulk Email")
-file = st.file_uploader("Upload CSV or Excel file with contacts",accept_multiple_files=False,type=["csv","xlsx","xls"])
+file = st.file_uploader("Upload CSV or Excel file with contacts",accept_multiple_files=False,type=["csv","Xlsx","xls"])
 if file:
     if file.type == "text/csv":
         df = pd.read_csv(file)
@@ -38,10 +37,10 @@ if file:
             st.error("Please input a Server")
             st.stop()
         if not password:
-            st.error("Please input a Password in the side bar through this icon >>")
+            st.error("Please input a Password")
             st.stop()
         if not sender_email:
-            st.error("Please input a sender_email in the side bar through this icon >>")
+            st.error("Please input a sender_email")
             st.stop()
         if not email_body:
             st.error("Please input an email_body")
@@ -86,5 +85,49 @@ if file:
                         st.write(failure)
                         st.stop()
         st.success(f"Done. Success: {success}. Failed: {len(failure)}")
+
+else:
+    subject = st.text_input("Email Subject")
+    send_as_html = st.checkbox("Send as HTML")
+    email_body = st.text_area("Email Body (can be HTML if selected)",height=320)
+    Preview_recepient = st.text_area("Preview recepient(optional). When set, only this address will receive the message")
+    sendemail = st.button("Send Email",False)
+
+    if sendemail:
+        if not server:
+            st.error("Please input a Server")
+            st.stop()
+        if not password:
+            st.error("Please input a Password")
+            st.stop()
+        if not sender_email:
+            st.error("Please input a sender_email")
+            st.stop()
+        if not email_body:
+            st.error("Please input an email_body")
+            st.stop()
+
+        if not subject:
+            st.error("Please input an email_subject")
+            st.stop()
+        
+        if not Preview_recepient:
+            st.error("Please input a recepient email address in the preview field")
+            st.stop()
+        else:
+            send_to = Preview_recepient.splitlines()
+            if not str(Preview_recepient).strip().__contains__("@" and "."):
+                st.error("Please input a Valid email address")
+                st.stop()
+        try:
+            progress = st.progress(0)
+            for i in range(len(send_to)):
+                send_email(server,port,sender_email,password,subject,email_body,send_to[i],use_tls=starttls,is_html=send_as_html)
+                st.success(f"Email sent to {send_to[i]}")
+                progress.progress(int((i/len(send_to))*100))
+        except Exception as e:
+            st.error(f"Failed to send email to {send_to[0]}: {e}")
+
+st.set_page_config(page_title="Bulk Email Sender",page_icon=":email:",layout="wide",initial_sidebar_state="expanded")
  
             
