@@ -1,0 +1,4 @@
+Streamlit
+Pandas
+smtplib
+email.message
